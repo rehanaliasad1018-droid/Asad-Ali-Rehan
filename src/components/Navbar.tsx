@@ -99,7 +99,7 @@ export const Navbar: React.FC = () => {
                   src={profile.avatarUrl}
                   alt={profile.name}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
             )}

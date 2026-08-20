@@ -51,11 +51,12 @@ export const CustomizerProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       if (saved) {
         const parsed = JSON.parse(saved);
         const name = (!parsed.name || parsed.name.toUpperCase().includes('REHAN')) ? DEFAULT_DESIGNER_PROFILE.name : parsed.name;
+        const isCustomUrl = parsed.avatarUrl && typeof parsed.avatarUrl === 'string' && (parsed.avatarUrl.startsWith('http') || parsed.avatarUrl.startsWith('data:'));
         return {
           ...DEFAULT_DESIGNER_PROFILE,
           ...parsed,
           name,
-          avatarUrl: parsed.avatarUrl || DEFAULT_DESIGNER_PROFILE.avatarUrl,
+          avatarUrl: isCustomUrl ? parsed.avatarUrl : DEFAULT_DESIGNER_PROFILE.avatarUrl,
         };
       }
     } catch {

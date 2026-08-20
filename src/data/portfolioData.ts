@@ -1,5 +1,5 @@
 import { Project, ExperienceItem, ExpertiseCategory, DesignTool, Testimonial, DesignerProfile, AccentTheme } from '../types';
-import asadPortrait from '../assets/images/asad_ali_portrait_1787263667016.jpg';
+import asadPortrait from '../assets/images/regenerated_image_1787267602470.png';
 
 export const ACCENT_THEMES: AccentTheme[] = [
   {

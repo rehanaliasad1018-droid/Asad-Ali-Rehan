@@ -8,7 +8,7 @@ export const AboutSection: React.FC = () => {
 
   const stats = [
     {
-      value: 17+,
+      value: '17+',
       label: 'Years of Experience',
       desc: 'Refining craft across identity, print, and digital art direction',
       icon: Briefcase,

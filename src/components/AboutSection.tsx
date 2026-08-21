@@ -26,7 +26,7 @@ export const AboutSection: React.FC = () => {
       icon: Sparkles,
     },
     {
-      value: profile.designAwards,
+      value: 14,
       label: 'Awards & Honors',
       desc: 'Selected in D&AD, Tokyo TDC, Red Dot, and Awwwards',
       icon: Award,

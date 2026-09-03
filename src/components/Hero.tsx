@@ -166,7 +166,7 @@ export const Hero: React.FC = () => {
                 src={profile.avatarUrl}
                 alt={profile.name}
                 referrerPolicy="no-referrer"
-                className="w-12 h-12 object-cover object-top border border-white/20 shrink-0"
+                className="w-16 h-16 sm:w-20 sm:h-20 object-cover object-top border border-white/20 shrink-0"
               />
             )}
             <div className="min-w-0">

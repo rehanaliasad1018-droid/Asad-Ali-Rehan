@@ -1,5 +1,5 @@
 import { Project, ExperienceItem, ExpertiseCategory, DesignTool, Testimonial, DesignerProfile, AccentTheme } from '../types';
-import asadPortrait from '../assets/images/asad_portrait_final_1788459699428.jpg';
+import asadPortrait from '../assets/images/mainimage.png';
 import aiBrandIdentitySystem from '../assets/images/ai_brand_identity_system_1788456845986.jpg';
 import solacePackaging from '../assets/images/solace_botanicals_packaging_1788457215997.jpg';
 import chronoArchiveMockup from '../assets/images/chrono_archive_mockup_1788460344444.jpg';

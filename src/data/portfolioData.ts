@@ -2,6 +2,8 @@ import { Project, ExperienceItem, ExpertiseCategory, DesignTool, Testimonial, De
 import asadPortrait from '../assets/images/asad_portrait_final_1788459699428.jpg';
 import aiBrandIdentitySystem from '../assets/images/ai_brand_identity_system_1788456845986.jpg';
 import solacePackaging from '../assets/images/solace_botanicals_packaging_1788457215997.jpg';
+import chronoArchiveMockup from '../assets/images/chrono_archive_mockup_1788460344444.jpg';
+import brandIdentityShowcase from '../assets/images/regenerated_image_1788461087250.png';
 
 export const ACCENT_THEMES: AccentTheme[] = [
   {
@@ -305,8 +307,8 @@ export const PROJECTS: Project[] = [
     client: 'Fondation d’Architecture Moderne',
     category: 'DIGITAL DESIGN',
     year: '2024',
-    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop',
+    heroImage: chronoArchiveMockup,
+    thumbnail: chronoArchiveMockup,
     aspectRatio: 'wide',
     shortDescription: 'Digital archive interface, editorial monograph layout, spatial typography system, and exhibition catalogue for modern brutalist architecture.',
     tools: ['Figma', 'Adobe InDesign', 'Photoshop', 'Cinema 4D'],
@@ -341,9 +343,9 @@ export const PROJECTS: Project[] = [
       },
       mockups: [
         {
-          url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1400&auto=format&fit=crop',
-          title: 'Clothbound Hardcover Archive Book',
-          caption: 'Blind debossed concrete-colored buckram cloth cover with foil edge gilding.',
+          url: chronoArchiveMockup,
+          title: 'Clothbound Hardcover Archive Book & Interactive Tablet',
+          caption: 'Blind debossed concrete-colored buckram cloth cover with foil edge gilding alongside the 3D museum archive UI.',
           type: 'full',
         },
         {
@@ -514,7 +516,7 @@ export const EXPERTISE_CATEGORIES: ExpertiseCategory[] = [
     shortDesc: 'Comprehensive brand marks, design guidelines, typography, and cohesive visual language.',
     description: 'Developing complete brand universes from ground zero. I build scalable identity systems including bespoke wordmarks, monograms, comprehensive 100+ page brand guidelines, packaging suites, and cross-channel visual assets that establish enduring brand equity.',
     tags: ['Logo Systems', 'Brand Guidelines', 'Typography Selection', 'Color Architecture', 'Iconography', 'Packaging Systems'],
-    previewImage: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop',
+    previewImage: brandIdentityShowcase,
     metrics: '40+ Brand Identities Built',
   },
   {

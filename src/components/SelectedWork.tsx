@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Grid3X3, Columns, List, ChevronRight, ChevronLeft, Layers, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Grid3X3, Columns, List, ChevronRight, ChevronLeft, Layers, Sparkles, Camera } from 'lucide-react';
 import { PROJECTS } from '../data/portfolioData';
 import { Project } from '../types';
 import { usePortfolio } from '../context/CustomizerContext';
@@ -9,13 +9,42 @@ type ViewMode = 'editorial' | 'horizontal' | 'index';
 type CategoryFilter = 'ALL' | 'BRAND IDENTITY' | 'SOCIAL MEDIA' | 'CAMPAIGN DESIGN' | 'DIGITAL DESIGN' | 'PACKAGING' | 'ADVERTISING';
 
 export const SelectedWork: React.FC = () => {
-  const { openProject, accentTheme, setCursorVariant, setCursorText, triggerHoverSound } = usePortfolio();
+  const { openProject, accentTheme, setCursorVariant, setCursorText, triggerHoverSound, projectImages, setProjectImage } = usePortfolio();
 
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('ALL');
   const [viewMode, setViewMode] = useState<ViewMode>('editorial');
   const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
 
   const horizontalScrollRef = useRef<HTMLDivElement>(null);
+
+  const handleProjectImageUpload = (projectId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result && typeof reader.result === 'string') {
+          setProjectImage(projectId, reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleProjectDrop = (projectId: string, e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result && typeof reader.result === 'string') {
+          setProjectImage(projectId, reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const categories: CategoryFilter[] = [
     'ALL',
@@ -144,6 +173,7 @@ export const SelectedWork: React.FC = () => {
               const isLarge = index % 3 === 0;
               const colSpan = isLarge ? 'md:col-span-12 lg:col-span-8' : 'md:col-span-6 lg:col-span-4';
               const aspect = isLarge ? 'aspect-[16/10]' : 'aspect-[4/5]';
+              const heroImg = projectImages[project.id] || project.heroImage;
 
               return (
                 <motion.div
@@ -168,29 +198,51 @@ export const SelectedWork: React.FC = () => {
                   }}
                 >
                   {/* Image Card Container */}
-                  <div className={`relative ${aspect} overflow-hidden bg-[#141414] border border-white/10 shadow-2xl mb-5`}>
+                  <div
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => handleProjectDrop(project.id, e)}
+                    className={`relative ${aspect} overflow-hidden bg-[#141414] border border-white/10 shadow-2xl mb-5 group/card transition-all duration-300 hover:border-white/25`}
+                  >
                     <img
-                      src={project.heroImage}
+                      src={heroImg}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:brightness-105"
+                      className="w-full h-full object-cover object-center select-none transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:contrast-[1.03] group-hover:brightness-[1.03]"
                       loading="lazy"
                     />
 
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-85 group-hover:opacity-60 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-85 group-hover:opacity-60 transition-opacity pointer-events-none" />
 
                     {/* Top Badges */}
-                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
                       <span className="px-3 py-1 bg-black/80 backdrop-blur-md border border-white/15 text-[9px] font-mono-code font-bold tracking-[0.2em] text-white uppercase">
                         {project.category}
                       </span>
-                      <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-[9px] font-mono-code text-white/70">
+                      <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-[9px] font-mono-code text-white/70 group-hover/card:opacity-0 transition-opacity">
                         {project.year}
                       </span>
                     </div>
 
+                    {/* Quick Replace Trigger Button on Hover */}
+                    <div className="absolute top-3.5 right-3.5 z-20 opacity-0 group-hover/card:opacity-100 transition-all duration-200">
+                      <label
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-2.5 py-1.5 bg-black/85 hover:bg-black text-white/80 hover:text-white backdrop-blur-md border border-white/20 text-[9px] font-mono-code tracking-wider flex items-center gap-1.5 cursor-pointer shadow-xl transition-all"
+                        title="Upload replacement image for this project"
+                      >
+                        <Camera size={11} />
+                        <span>REPLACE</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleProjectImageUpload(project.id, e)}
+                        />
+                      </label>
+                    </div>
+
                     {/* Bottom Floating Info */}
-                    <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
+                    <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between pointer-events-none z-10">
                       <div className="max-w-[75%]">
                         <span
                           className="text-[9px] font-mono-code uppercase tracking-[0.2em] block mb-1 font-semibold"
@@ -204,7 +256,7 @@ export const SelectedWork: React.FC = () => {
                       </div>
 
                       <div
-                        className="w-10 h-10 flex items-center justify-center text-black font-bold transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-xl"
+                        className="w-10 h-10 flex items-center justify-center text-black font-bold transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-xl pointer-events-auto"
                         style={{ backgroundColor: accentTheme.hex }}
                       >
                         <ArrowUpRight size={18} strokeWidth={2.5} />
@@ -265,7 +317,9 @@ export const SelectedWork: React.FC = () => {
               ref={horizontalScrollRef}
               className="flex gap-6 overflow-x-auto no-scrollbar pb-6 pt-2 snap-x snap-mandatory"
             >
-              {filteredProjects.map((project) => (
+              {filteredProjects.map((project) => {
+                const horizImg = projectImages[project.id] || project.heroImage;
+                return (
                 <div
                   key={project.id}
                   onClick={() => openProject(project)}
@@ -282,9 +336,9 @@ export const SelectedWork: React.FC = () => {
                 >
                   <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-4">
                     <img
-                      src={project.heroImage}
+                      src={horizImg}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
@@ -316,7 +370,8 @@ export const SelectedWork: React.FC = () => {
                     {project.shortDescription}
                   </p>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

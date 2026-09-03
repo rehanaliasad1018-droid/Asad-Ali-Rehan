@@ -40,6 +40,8 @@ interface CustomizerContextType {
   setCursorText: (text: string) => void;
   cursorVariant: 'default' | 'pointer' | 'project' | 'view' | 'drag' | 'copy';
   setCursorVariant: (variant: 'default' | 'pointer' | 'project' | 'view' | 'drag' | 'copy') => void;
+  projectImages: Record<string, string>;
+  setProjectImage: (projectId: string, imageUrl: string) => void;
 }
 
 const CustomizerContext = createContext<CustomizerContextType | undefined>(undefined);
@@ -96,6 +98,24 @@ export const CustomizerProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [copyToastMessage, setCopyToastMessage] = useState<string | null>(null);
   const [cursorText, setCursorText] = useState<string>('');
   const [cursorVariant, setCursorVariant] = useState<'default' | 'pointer' | 'project' | 'view' | 'drag' | 'copy'>('default');
+  const [projectImages, setProjectImages] = useState<Record<string, string>>(() => {
+    try {
+      const saved = localStorage.getItem('kairos_project_images');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return {};
+  });
+
+  const setProjectImage = (projectId: string, imageUrl: string) => {
+    setProjectImages((prev) => {
+      const updated = { ...prev, [projectId]: imageUrl };
+      try {
+        localStorage.setItem('kairos_project_images', JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+    showToast('Project artwork updated');
+  };
 
   // Keyboard shortcut listener (Cmd+K / Ctrl+K / Escape)
   useEffect(() => {
@@ -275,6 +295,8 @@ export const CustomizerProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setCursorText,
         cursorVariant,
         setCursorVariant,
+        projectImages,
+        setProjectImage,
       }}
     >
       {children}

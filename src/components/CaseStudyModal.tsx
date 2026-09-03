@@ -30,8 +30,9 @@ export const CaseStudyModal: React.FC = () => {
 
   if (!activeProject) return null;
 
-  const caseStudy = activeProject.caseStudy;
-  const currentIndex = PROJECTS.findIndex((p) => p.id === activeProject.id);
+  const currentProject = PROJECTS.find((p) => p.id === activeProject.id) || activeProject;
+  const caseStudy = currentProject.caseStudy;
+  const currentIndex = PROJECTS.findIndex((p) => p.id === currentProject.id);
   const prevProject = PROJECTS[(currentIndex - 1 + PROJECTS.length) % PROJECTS.length];
   const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
 
@@ -45,8 +46,8 @@ export const CaseStudyModal: React.FC = () => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${activeProject.title} — Case Study`,
-        text: activeProject.shortDescription,
+        title: `${currentProject.title} — Case Study`,
+        text: currentProject.shortDescription,
         url: window.location.href,
       }).catch(() => {});
     } else {
@@ -84,7 +85,7 @@ export const CaseStudyModal: React.FC = () => {
             </button>
             <span className="text-white/20 hidden sm:inline">/</span>
             <span className="text-xs font-mono-code text-white/80 font-bold uppercase truncate max-w-xs sm:max-w-md">
-              {activeProject.title}
+              {currentProject.title}
             </span>
           </div>
 
@@ -126,18 +127,18 @@ export const CaseStudyModal: React.FC = () => {
                 className="px-3 py-1 text-[9px] font-mono-code font-bold uppercase text-black"
                 style={{ backgroundColor: accentTheme.hex }}
               >
-                {activeProject.category}
+                {currentProject.category}
               </span>
               <span className="px-3 py-1 bg-white/5 border border-white/10 text-[9px] font-mono-code text-white/70">
-                {activeProject.year}
+                {currentProject.year}
               </span>
               <span className="px-3 py-1 bg-white/5 border border-white/10 text-[9px] font-mono-code text-white/50">
-                CLIENT: {activeProject.client}
+                CLIENT: {currentProject.client}
               </span>
             </div>
 
             <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-7xl text-white uppercase tracking-tight leading-[0.95] mb-6">
-              {activeProject.title}
+              {currentProject.title}
             </h1>
 
             <p className="font-editorial text-2xl sm:text-3xl text-white/80 italic font-light max-w-3xl leading-relaxed mb-10">
@@ -147,8 +148,9 @@ export const CaseStudyModal: React.FC = () => {
             {/* Hero Visual Image */}
             <div className="relative aspect-[16/9] overflow-hidden border border-white/15 shadow-2xl mb-12 bg-[#141414]">
               <img
-                src={activeProject.heroImage}
-                alt={activeProject.title}
+                src={currentProject.heroImage}
+                alt={currentProject.title}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -178,7 +180,7 @@ export const CaseStudyModal: React.FC = () => {
                   CLIENT / SECTOR
                 </div>
                 <div className="text-xs font-mono-code text-white font-bold">
-                  {activeProject.client}
+                  {currentProject.client}
                 </div>
               </div>
 
@@ -187,7 +189,7 @@ export const CaseStudyModal: React.FC = () => {
                   TOOLS USED
                 </div>
                 <div className="text-xs font-mono-code text-white/80 font-bold truncate">
-                  {activeProject.tools.join(', ')}
+                  {currentProject.tools.join(', ')}
                 </div>
               </div>
             </div>

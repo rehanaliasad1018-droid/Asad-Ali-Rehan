@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, RotateCcw, Check, Sparkles, User, Briefcase, Award, Mail, Globe, Save } from 'lucide-react';
+import { X, RotateCcw, Check, Sparkles, User, Briefcase, Award, Mail, Globe, Save, Upload, Image as ImageIcon } from 'lucide-react';
 import { usePortfolio } from '../context/CustomizerContext';
 import { DEFAULT_DESIGNER_PROFILE } from '../data/portfolioData';
 
@@ -148,28 +148,67 @@ export const ProfileCustomizerDrawer: React.FC = () => {
               </div>
             </div>
 
-            {/* Avatar Thumbnail Preview */}
-            <div className="mb-6 p-3 bg-[#181818] border border-white/10 flex items-center gap-4">
-              <div className="w-14 h-14 bg-black overflow-hidden shrink-0 border border-white/20">
-                <img
-                  src={formData.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop"}
-                  alt={formData.name}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
+            {/* Avatar Thumbnail Preview & Upload */}
+            <div className="mb-6 p-4 bg-[#181818] border border-white/10 flex flex-col gap-3">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 bg-black overflow-hidden shrink-0 border border-white/20">
+                  <img
+                    src={formData.avatarUrl || DEFAULT_DESIGNER_PROFILE.avatarUrl}
+                    alt={formData.name}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-mono-code text-white/50 uppercase tracking-wider">CURRENT PORTRAIT</div>
+                  <div className="text-xs font-display font-bold text-white uppercase truncate">{formData.name}</div>
+                  <div className="text-[10px] font-mono-code text-white/40 truncate">{formData.title}</div>
+                  {formData.avatarUrl !== DEFAULT_DESIGNER_PROFILE.avatarUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, avatarUrl: DEFAULT_DESIGNER_PROFILE.avatarUrl })}
+                      className="mt-1 text-[9px] font-mono-code text-orange-400 hover:underline flex items-center gap-1"
+                    >
+                      <RotateCcw className="w-2.5 h-2.5" /> Revert to Default Portrait
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Direct File Upload (Drag & Drop or Click) */}
+              <label className="border border-dashed border-white/20 hover:border-white/40 p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-[#141414] hover:bg-[#1f1f1f] transition-colors text-center group">
+                <Upload className="w-4 h-4 text-white/60 group-hover:text-white" />
+                <span className="text-[10px] font-mono-code text-white/80 uppercase tracking-wider">
+                  Upload Photo from Device
+                </span>
+                <span className="text-[9px] font-mono-code text-white/40">
+                  Drop image here or click (PNG, JPG, WebP)
+                </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = (event) => {
+                        if (event.target?.result) {
+                          setFormData({ ...formData, avatarUrl: event.target.result as string });
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
                 />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-mono-code text-white/50 uppercase tracking-wider">CURRENT PORTRAIT</div>
-                <div className="text-xs font-display font-bold text-white uppercase truncate">{formData.name}</div>
-                <div className="text-[10px] font-mono-code text-white/40 truncate">{formData.title}</div>
-              </div>
+              </label>
             </div>
 
             {/* Form Fields */}
             <form onSubmit={handleSave} className="flex flex-col gap-4">
               <div>
                 <label className="text-[10px] font-mono-code text-white/50 uppercase tracking-wider block mb-1">
-                  PORTRAIT IMAGE URL
+                  OR ENTER PORTRAIT IMAGE URL
                 </label>
                 <input
                   type="text"

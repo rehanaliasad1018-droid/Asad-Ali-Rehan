@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Award, Briefcase, Sparkles, CheckCircle2, FileText, ArrowUpRight } from 'lucide-react';
+import { Award, Briefcase, Sparkles, CheckCircle2, FileText, ArrowUpRight, Upload, Camera } from 'lucide-react';
 import { usePortfolio } from '../context/CustomizerContext';
+import { DEFAULT_DESIGNER_PROFILE } from '../data/portfolioData';
 
 export const AboutSection: React.FC = () => {
-  const { profile, accentTheme, openProfileDrawer, setCursorVariant, triggerHoverSound, showToast } = usePortfolio();
+  const { profile, setProfile, accentTheme, openProfileDrawer, openResume, setCursorVariant, triggerHoverSound, showToast } = usePortfolio();
 
   const stats = [
     {
@@ -53,9 +54,8 @@ export const AboutSection: React.FC = () => {
   ];
 
   const handleDownloadCV = () => {
-    showToast('CV downloaded / prepared for viewing');
-    // Open print preview or trigger download
-    window.print();
+    openResume();
+    showToast('Executive CV opened — Ready to view or print/download as PDF');
   };
 
   return (
@@ -153,16 +153,64 @@ export const AboutSection: React.FC = () => {
             className="lg:col-span-5 relative"
           >
             <div className="relative border border-black/10 bg-white p-4 shadow-xl group">
-              <div className="aspect-[4/5] overflow-hidden relative bg-[#1c1c1c]">
+              <div 
+                className="aspect-[4/5] overflow-hidden relative bg-[#1c1c1c]"
+                onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const file = e.dataTransfer.files?.[0];
+                  if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                      if (event.target?.result) {
+                        setProfile({ ...profile, avatarUrl: event.target.result as string });
+                        showToast('Portrait image updated successfully!');
+                      }
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              >
                 <img
-                  src={profile.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop"}
+                  id="about-designer-portrait"
+                  src={profile.avatarUrl || DEFAULT_DESIGNER_PROFILE.avatarUrl}
                   alt={profile.name}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 opacity-95"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-transparent pointer-events-none" />
 
-                <div className="absolute bottom-6 left-6 right-6">
+                {/* Quick Upload / Replace Button */}
+                <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <label 
+                    className="cursor-pointer flex items-center gap-1.5 px-3 py-1.5 bg-black/80 hover:bg-black text-white text-[10px] font-mono-code uppercase tracking-wider backdrop-blur-md border border-white/20 shadow-lg transition-all"
+                    title="Upload or replace portrait photo"
+                  >
+                    <Upload className="w-3 h-3 text-white" />
+                    <span>Change Photo</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            if (event.target?.result) {
+                              setProfile({ ...profile, avatarUrl: event.target.result as string });
+                              showToast('Portrait photo updated successfully!');
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
                   <div
                     className="text-[9px] font-mono-code tracking-[0.2em] uppercase mb-1 font-semibold"
                     style={{ color: accentTheme.hex }}

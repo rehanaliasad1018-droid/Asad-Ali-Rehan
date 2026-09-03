@@ -179,14 +179,82 @@ export const ResumeModal: React.FC = () => {
               </div>
             </div>
 
-            {/* Education & Honours */}
+            {/* Education & Certifications */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/10 print:border-black/10">
+              <div>
+                <h2 className="text-xs font-mono-code font-bold uppercase tracking-[0.2em] text-white/40 print:text-black/50 mb-3 flex items-center gap-1.5">
+                  <GraduationCap size={13} />
+                  <span>// EDUCATION</span>
+                </h2>
+                <div className="space-y-3">
+                  <div className="border-l-2 border-white/10 print:border-black/20 pl-3">
+                    <div className="text-xs font-bold text-white print:text-black uppercase">
+                      Bachelors in Commerce (2nd Div)
+                    </div>
+                    <div className="text-[11px] text-white/60 print:text-black/70 font-mono-code">
+                      Dadabhoy University of Higher Education • 2012
+                    </div>
+                  </div>
+                  <div className="border-l-2 border-white/10 print:border-black/20 pl-3">
+                    <div className="text-xs font-bold text-white print:text-black uppercase">
+                      Intermediate (C Grade)
+                    </div>
+                    <div className="text-[11px] text-white/60 print:text-black/70 font-mono-code">
+                      Formen College Nazimabad Karachi • 2006
+                    </div>
+                  </div>
+                  <div className="border-l-2 border-white/10 print:border-black/20 pl-3">
+                    <div className="text-xs font-bold text-white print:text-black uppercase">
+                      Matriculation (A Grade)
+                    </div>
+                    <div className="text-[11px] text-white/60 print:text-black/70 font-mono-code">
+                      S.M Public School • 2004
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-xs font-mono-code font-bold uppercase tracking-[0.2em] text-white/40 print:text-black/50 mb-3 flex items-center gap-1.5">
+                  <Award size={13} />
+                  <span>// CERTIFICATIONS &amp; EXPERTISE</span>
+                </h2>
+                <div className="space-y-3">
+                  <div className="border-l-2 border-white/10 print:border-black/20 pl-3">
+                    <div className="text-xs font-bold text-white print:text-black uppercase">
+                      Graphic &amp; Web Design
+                    </div>
+                    <div className="text-[11px] text-white/60 print:text-black/70 font-mono-code">
+                      Arena Multimedia • 2008
+                    </div>
+                  </div>
+                  <div className="border-l-2 border-white/10 print:border-black/20 pl-3">
+                    <div className="text-xs font-bold text-white print:text-black uppercase">
+                      Diploma in Information Tech.
+                    </div>
+                    <div className="text-[11px] text-white/60 print:text-black/70 font-mono-code">
+                      Aptech Computer Education • 2012
+                    </div>
+                  </div>
+                  <div className="pt-1 flex flex-wrap gap-1">
+                    {['Web Design', 'UI/UX Design', 'Logo Design', 'Packaging & Label', 'Brochures / Flyers', 'Social Media Marketing', 'Corporate Animation'].map((s, idx) => (
+                      <span key={idx} className="text-[9px] font-mono-code px-2 py-0.5 bg-white/5 print:bg-black/5 border border-white/10 print:border-black/10 text-white/60 print:text-black/70">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Verification */}
             <div className="pt-4 border-t border-white/10 print:border-black/10 flex flex-wrap justify-between items-center text-xs font-mono-code text-white/50 print:text-black/60">
               <div>
-                BACHELOR OF FINE ARTS (BFA) IN GRAPHIC &amp; COMMUNICATION DESIGN
+                M. ASAD ALI — SENIOR GRAPHIC DESIGNER &amp; ART DIRECTOR (17+ YEARS EXP)
               </div>
               <div className="flex items-center gap-2">
-                <Award size={12} />
-                <span>AWWWARDS SOTD • RED DOT DESIGN AWARD</span>
+                <CheckCircle2 size={12} style={{ color: accentTheme.hex }} />
+                <span>VERIFIED PROFESSIONAL CV</span>
               </div>
             </div>
           </div>

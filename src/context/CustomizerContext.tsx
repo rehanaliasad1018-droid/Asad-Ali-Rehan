@@ -47,16 +47,16 @@ const CustomizerContext = createContext<CustomizerContextType | undefined>(undef
 export const CustomizerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [profile, setProfile] = useState<DesignerProfile>(() => {
     try {
-      const saved = localStorage.getItem('kairos_designer_profile');
+      const saved = localStorage.getItem('kairos_designer_profile_v2');
       if (saved) {
         const parsed = JSON.parse(saved);
         const name = (!parsed.name || parsed.name.toUpperCase().includes('REHAN')) ? DEFAULT_DESIGNER_PROFILE.name : parsed.name;
-        const isCustomUrl = parsed.avatarUrl && typeof parsed.avatarUrl === 'string' && (parsed.avatarUrl.startsWith('http') || parsed.avatarUrl.startsWith('data:'));
+        const isUserUploadedDataUrl = parsed.avatarUrl && typeof parsed.avatarUrl === 'string' && parsed.avatarUrl.startsWith('data:image/');
         return {
           ...DEFAULT_DESIGNER_PROFILE,
           ...parsed,
           name,
-          avatarUrl: isCustomUrl ? parsed.avatarUrl : DEFAULT_DESIGNER_PROFILE.avatarUrl,
+          avatarUrl: isUserUploadedDataUrl ? parsed.avatarUrl : DEFAULT_DESIGNER_PROFILE.avatarUrl,
         };
       }
     } catch {
@@ -115,7 +115,7 @@ export const CustomizerProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   useEffect(() => {
     try {
-      localStorage.setItem('kairos_designer_profile', JSON.stringify(profile));
+      localStorage.setItem('kairos_designer_profile_v2', JSON.stringify(profile));
     } catch {}
   }, [profile]);
 

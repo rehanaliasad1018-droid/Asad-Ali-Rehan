@@ -70,7 +70,7 @@ export const DEFAULT_DESIGNER_PROFILE: DesignerProfile = {
   statement: 'DESIGN WITH PURPOSE.\nVISUALS WITH IMPACT.',
   location: 'Karachi, Pakistan • Dubai, UAE (Available Globally)',
   email: 'asadalirehan123@gmail.com',
-  phone: '+92333 132 3432 | +97150 3627 681',
+  phone: '+92 333 1323432 | +971 50 3627681',
   status: 'AVAILABLE FOR SELECTED PROJECTS',
   avatarUrl: asadPortrait,
   yearsOfExperience: '17+',

@@ -18,6 +18,16 @@ export const ContactSection: React.FC = () => {
     showToast(`Email copied: ${profile.email}`);
   };
 
+  const handleCopyPhonePK = () => {
+    navigator.clipboard.writeText('+923331323432');
+    showToast('Phone copied: +92 333 1323432');
+  };
+
+  const handleCopyPhoneUAE = () => {
+    navigator.clipboard.writeText('+971503627681');
+    showToast('Phone copied: +971 50 3627681');
+  };
+
   const socials = [
     { label: 'BEHANCE', url: profile.socials.behance, id: 'behance' },
     { label: 'DRIBBBLE', url: profile.socials.dribbble, id: 'dribbble' },
@@ -105,7 +115,7 @@ export const ContactSection: React.FC = () => {
               </a>
             </div>
 
-            {/* 1-Click Clipboard Copy Pill */}
+            {/* 1-Click Clipboard Copy Pill - Email */}
             <div className="p-6 bg-white border border-black/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
               <div>
                 <div className="text-[10px] font-mono-code text-neutral-500 uppercase tracking-[0.2em] mb-1">
@@ -128,6 +138,91 @@ export const ContactSection: React.FC = () => {
                 <Copy size={12} />
                 <span>COPY ADDRESS</span>
               </button>
+            </div>
+
+            {/* Direct Phone & WhatsApp: Pakistan & UAE */}
+            <div className="p-6 bg-white border border-black/10 flex flex-col gap-4 shadow-sm">
+              <div className="text-[10px] font-mono-code text-neutral-500 uppercase tracking-[0.2em]">
+                DIRECT PHONE &amp; WHATSAPP
+              </div>
+
+              {/* Line 1: Pakistan */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1 border-b border-black/5 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[10px] font-mono-code font-bold uppercase tracking-wider px-2 py-0.5 bg-neutral-100 border border-neutral-200 text-neutral-700">
+                    PK
+                  </span>
+                  <a
+                    href="tel:+923331323432"
+                    className="font-mono-code text-sm sm:text-base text-black font-bold tracking-wider hover:underline"
+                  >
+                    +92 333 1323432
+                  </a>
+                </div>
+
+                <div className="flex items-center gap-2 self-start sm:self-center">
+                  <button
+                    onClick={handleCopyPhonePK}
+                    onMouseEnter={() => {
+                      setCursorVariant('pointer');
+                      triggerHoverSound();
+                    }}
+                    onMouseLeave={() => setCursorVariant('default')}
+                    className="px-3.5 py-1.5 bg-[#FAF9F5] border border-black/15 text-[10px] font-mono-code tracking-[0.15em] uppercase text-black hover:bg-black hover:text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                  >
+                    <Copy size={11} />
+                    <span>COPY</span>
+                  </button>
+                  <a
+                    href="https://wa.me/923331323432"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-1.5 bg-black text-white hover:bg-neutral-800 text-[10px] font-mono-code tracking-[0.15em] uppercase transition-all flex items-center gap-1 shadow-2xs"
+                  >
+                    <span>WHATSAPP</span>
+                    <ArrowUpRight size={11} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Line 2: UAE */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[10px] font-mono-code font-bold uppercase tracking-wider px-2 py-0.5 bg-neutral-100 border border-neutral-200 text-neutral-700">
+                    UAE
+                  </span>
+                  <a
+                    href="tel:+971503627681"
+                    className="font-mono-code text-sm sm:text-base text-black font-bold tracking-wider hover:underline"
+                  >
+                    +971 50 3627681
+                  </a>
+                </div>
+
+                <div className="flex items-center gap-2 self-start sm:self-center">
+                  <button
+                    onClick={handleCopyPhoneUAE}
+                    onMouseEnter={() => {
+                      setCursorVariant('pointer');
+                      triggerHoverSound();
+                    }}
+                    onMouseLeave={() => setCursorVariant('default')}
+                    className="px-3.5 py-1.5 bg-[#FAF9F5] border border-black/15 text-[10px] font-mono-code tracking-[0.15em] uppercase text-black hover:bg-black hover:text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                  >
+                    <Copy size={11} />
+                    <span>COPY</span>
+                  </button>
+                  <a
+                    href="https://wa.me/971503627681"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-1.5 bg-black text-white hover:bg-neutral-800 text-[10px] font-mono-code tracking-[0.15em] uppercase transition-all flex items-center gap-1 shadow-2xs"
+                  >
+                    <span>WHATSAPP</span>
+                    <ArrowUpRight size={11} />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 

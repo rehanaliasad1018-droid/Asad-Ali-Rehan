@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { ArrowDown, ArrowUpRight, Sparkles, Globe2, Calculator, FlaskConical, Command, FileText } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Sparkles, Globe2, Calculator, FlaskConical, Command, FileText, Phone } from 'lucide-react';
 import { usePortfolio } from '../context/CustomizerContext';
 import { PROJECTS } from '../data/portfolioData';
 
 export const Hero: React.FC = () => {
-  const { profile, accentTheme, openInquiry, openProject, openEstimator, openResume, openCommandPalette, setCursorVariant, triggerHoverSound } = usePortfolio();
+  const { profile, accentTheme, openInquiry, openProject, openEstimator, openResume, openCommandPalette, setCursorVariant, triggerHoverSound, showToast } = usePortfolio();
 
   // Local Time Capital State
   const [timeNY, setTimeNY] = useState('');
@@ -94,13 +94,48 @@ export const Hero: React.FC = () => {
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 border-b border-white/10 z-10">
         {/* Left Column: Headline & Narrative */}
         <div className="lg:col-span-7 flex flex-col justify-center px-6 sm:px-12 py-12 sm:py-16 lg:border-r border-white/10 relative">
-          <div className="mb-4 flex items-center gap-2">
+          <div className="mb-5 flex flex-wrap items-center gap-2.5 sm:gap-3">
             <span
-              className="text-[9px] font-mono-code font-bold uppercase tracking-[0.25em]"
+              className="text-[10px] font-mono-code font-bold uppercase tracking-[0.2em] inline-flex items-center gap-2 py-1.5 px-3 bg-white/[0.04] border border-white/15 backdrop-blur-md transition-all hover:border-white/30 hover:bg-white/[0.07]"
               style={{ color: accentTheme.hex }}
             >
               01 // SENIOR ART DIRECTOR &amp; DESIGNER
             </span>
+
+            {/* Direct Phone Numbers Badge Group */}
+            <div className="inline-flex flex-wrap items-center gap-2 py-1.5 px-3 bg-white/[0.04] border border-white/15 backdrop-blur-md transition-all hover:border-white/30 text-[10px] font-mono-code">
+              <Phone size={11} style={{ color: accentTheme.hex }} className="shrink-0" />
+              
+              <a
+                href="tel:+923331323432"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigator.clipboard?.writeText('+923331323432');
+                  showToast('Copied: +92 333 1323432');
+                }}
+                className="inline-flex items-center gap-1 text-white/85 hover:text-white font-semibold hover:underline transition-colors cursor-pointer whitespace-nowrap"
+                title="Click to call or copy +92 333 1323432 (PK)"
+              >
+                <span className="text-white/40 text-[9px] font-normal">PK</span>
+                <span>+92 333 1323432</span>
+              </a>
+
+              <span className="text-white/20 select-none">|</span>
+
+              <a
+                href="tel:+971503627681"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigator.clipboard?.writeText('+971503627681');
+                  showToast('Copied: +971 50 3627681');
+                }}
+                className="inline-flex items-center gap-1 text-white/85 hover:text-white font-semibold hover:underline transition-colors cursor-pointer whitespace-nowrap"
+                title="Click to call or copy +971 50 3627681 (UAE)"
+              >
+                <span className="text-white/40 text-[9px] font-normal">UAE</span>
+                <span>+971 50 3627681</span>
+              </a>
+            </div>
           </div>
 
           {/* Sized cleanly and powerfully with refined proportional scale */}

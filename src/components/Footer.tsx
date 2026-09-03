@@ -66,7 +66,13 @@ export const Footer: React.FC = () => {
             © {new Date().getFullYear()} {profile.name}. ALL RIGHTS RESERVED. CRAFTED FOR EDITORIAL EXCELLENCE.
           </div>
 
-          <div className="flex items-center gap-6 text-white/60">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-white/60">
+            <a href="tel:+923331323432" className="hover:text-white transition-colors" title="Call PK office">
+              PK: +92 333 1323432
+            </a>
+            <a href="tel:+971503627681" className="hover:text-white transition-colors" title="Call UAE office">
+              UAE: +971 50 3627681
+            </a>
             <a href={`mailto:${profile.email}`} className="hover:text-white transition-colors">
               {profile.email}
             </a>
